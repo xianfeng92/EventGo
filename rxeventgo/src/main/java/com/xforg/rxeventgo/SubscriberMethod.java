@@ -11,18 +11,14 @@ public class SubscriberMethod {
     final Method method;
     final Scheduler threadMode;
     final Class<?> eventType;
-    final int priority;
-    final boolean sticky;
 
     /** Used for efficient comparison */
     String methodString;
 
-    public SubscriberMethod(Method method, Class<?> eventType, Scheduler threadMode, int priority, boolean sticky) {
+    public SubscriberMethod(Method method, Class<?> eventType, Scheduler threadMode) {
         this.method = method;
         this.threadMode = threadMode;
         this.eventType = eventType;
-        this.priority = priority;
-        this.sticky = sticky;
     }
 
     @Override
@@ -56,11 +52,9 @@ public class SubscriberMethod {
         return method.hashCode();
     }
 
-
     public Method getMethod() {
         return method;
     }
-
 
     public Class<?> getEventType() {
         return eventType;

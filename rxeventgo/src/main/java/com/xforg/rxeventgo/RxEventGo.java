@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.processors.FlowableProcessor;
@@ -19,10 +20,12 @@ public class RxEventGo {
     private final FlowableProcessor<Object> mFlowableProcessor;
     private final SubscriberMethodFinder mSubscriberMethodFinder;
     private static Map<Class<?>, Map<Class<?>, Disposable>> mDisposableMap = new HashMap<>();
+    private final Map<Class<?>, Object> stickyEvents;
 
     private RxEventGo() {
         mFlowableProcessor = PublishProcessor.create().toSerialized();
         mSubscriberMethodFinder = new SubscriberMethodFinder();
+        stickyEvents = new ConcurrentHashMap<>();
     }
 
     public static RxEventGo getDefault() {
