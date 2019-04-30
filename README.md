@@ -1,2 +1,2 @@
 # EventGo
-EventGo
+ Event Bus By RxJava
