@@ -21,8 +21,7 @@ class SubscriberMethodFinder {
     private static final int POOL_SIZE = 4;
     private static final FindState[] FIND_STATE_POOL = new FindState[POOL_SIZE];
 
-    SubscriberMethodFinder() {
-    }
+    SubscriberMethodFinder() {}
 
     List<SubscriberMethod> findSubscriberMethods(Class<?> subscriberClass) {
         List<SubscriberMethod> subscriberMethods = METHOD_CACHE.get(subscriberClass);

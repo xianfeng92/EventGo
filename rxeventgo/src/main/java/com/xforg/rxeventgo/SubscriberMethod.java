@@ -1,7 +1,6 @@
 package com.xforg.rxeventgo;
 
 import java.lang.reflect.Method;
-
 import io.reactivex.Scheduler;
 
 /**

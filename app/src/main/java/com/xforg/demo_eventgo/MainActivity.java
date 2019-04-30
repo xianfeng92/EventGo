@@ -1,15 +1,15 @@
 package com.xforg.demo_eventgo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 import com.xforg.rxeventgo.RxEventGo;
 import com.xforg.rxeventgo.Subscribe;
 import com.xforg.rxeventgo.ThreadMode;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
+    private static final String TAG = "XFORG";
 
     private Button post;
 
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void run() {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                     RxEventGo.getDefault().post(new MyEvent("Message from RxEventGo"));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void HanldeEvent(MyEvent myEvent){
-        Toast.makeText(this,"handleEvent"+myEvent.getMsg(),Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "HanldeEvent: ");
     }
 
     @Override
@@ -52,5 +52,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onStop();
         RxEventGo.getDefault().unregister(this);
     }
-
 }

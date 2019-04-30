@@ -50,7 +50,8 @@ public class RxEventGo {
     private void addSubscriber(final Object subsciber, final SubscriberMethod subscriberMethod) {
         Class<?> subsciberClass = subsciber.getClass();
         Class<?> eventType = subscriberMethod.getEventType();
-        Disposable disposable = mFlowableProcessor.ofType(eventType).observeOn(subscriberMethod.getThreadMode())
+        Disposable disposable = mFlowableProcessor.ofType(eventType)
+                .observeOn(subscriberMethod.getThreadMode())
                 .subscribe(new Consumer<Object>() {
                     @Override
                     public void accept(Object o) throws Exception {
@@ -79,7 +80,7 @@ public class RxEventGo {
     }
 
     /**
-     * Posts the given event to the RxBus. Not Support Sticky Event
+     * Posts the given event to the RxEventGo.Not Support Sticky Event
      */
     public void post(Object obj) {
         if (mFlowableProcessor.hasSubscribers()) {
@@ -94,7 +95,7 @@ public class RxEventGo {
         Class<?> subscriberClass = subscriber.getClass();
         Map<Class<?>, Disposable> disposableMap = mDisposableMap.get(subscriberClass);
         if (disposableMap == null) {
-            throw new IllegalArgumentException(subscriberClass.getSimpleName() + " haven't registered RxBus");
+            throw new IllegalArgumentException(subscriberClass.getSimpleName() + " haven't registered RxEventGo");
         }
         Set<Class<?>> keySet = disposableMap.keySet();
         for (Class<?> evenType : keySet) {
@@ -111,7 +112,7 @@ public class RxEventGo {
         Class<?> subscriberClass = subscriber.getClass();
         Map<Class<?>, Disposable> disposableMap = mDisposableMap.get(subscriberClass);
         if (disposableMap == null) {
-            throw new IllegalArgumentException(subscriberClass.getSimpleName() + " haven't registered RxBus");
+            throw new IllegalArgumentException(subscriberClass.getSimpleName() + " haven't registered RxEventGo");
         }
         if (!disposableMap.containsKey(eventType)) {
             throw new IllegalArgumentException("The event with type of " + subscriberClass.getSimpleName() + " is not" +
